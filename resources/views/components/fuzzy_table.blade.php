@@ -1,8 +1,9 @@
 <div class="overflow-x-auto">
-    <table class="min-w-full divide-y w-full bg-white border border-gray-200">
+    <table class="min-w-full divide-y w-full bg-white border border-gray-200 mb-10">
         <thead>
             <tr class="bg-gray-50 border-b">
-                <th class="py-3 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nilai Linguistik</th>
+                <th class="py-3 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nilai
+                    Linguistik</th>
                 <th class="py-3 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fuzzy</th>
                 <th class="py-3 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Interval</th>
             </tr>

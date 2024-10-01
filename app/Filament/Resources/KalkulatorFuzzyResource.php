@@ -2,14 +2,15 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\KalkulatorFuzzyResource\Pages;
-use App\Models\KalkulatorFuzzy;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
+use App\Models\VariabelFuzzy;
+use App\Models\KalkulatorFuzzy;
+use Filament\Resources\Resource;
 use Illuminate\Support\HtmlString;
+use App\Filament\Resources\KalkulatorFuzzyResource\Pages;
 
 class KalkulatorFuzzyResource extends Resource
 {
@@ -46,6 +47,8 @@ class KalkulatorFuzzyResource extends Resource
                             ->label('Usia dalam Bulan')
                             ->required()
                             ->numeric()
+                            ->minValue(0)
+                            ->maxValue(60)
                             ->visible(fn($record) => $record == null),
                         Forms\Components\TextInput::make('berat_badan')
                             ->label('Berat Badan')
@@ -56,6 +59,8 @@ class KalkulatorFuzzyResource extends Resource
                             ->label('Tinggi Badan')
                             ->required()
                             ->numeric()
+                            ->minValue(45)
+                            ->maxValue(120)
                             ->visible(fn($record) => $record == null),
                         Forms\Components\Placeholder::make('user.name')->label('User')
                             ->content(function ($record) {
@@ -107,12 +112,12 @@ class KalkulatorFuzzyResource extends Resource
                                 if (is_string($record->fuzzy_bbu)) {
                                     $jsonDecode = json_decode($record->fuzzy_bbu, true);
                                     if (is_array($jsonDecode)) {
-                                        return view('components.fuzzy_table', ['fuzzy' => $jsonDecode]);
+                                        return view('components.fuzzy_table', ['fuzzy' => $jsonDecode, "kriteria" => "BBU"]);
                                     } else {
                                         return 'Invalid JSON';
                                     }
                                 } else if (is_array($record->fuzzy_bbu)) {
-                                    return view('components.fuzzy_table', ['fuzzy' => $record->fuzzy_bbu]);
+                                    return view('components.fuzzy_table', ['fuzzy' => $record->fuzzy_bbu, "kriteria" => "BBU"]);
                                 }
 
                                 return 'No data available';
@@ -123,12 +128,12 @@ class KalkulatorFuzzyResource extends Resource
                                 if (is_string($record->fuzzy_tbu)) {
                                     $jsonDecode = json_decode($record->fuzzy_tbu, true);
                                     if (is_array($jsonDecode)) {
-                                        return view('components.fuzzy_table', ['fuzzy' => $jsonDecode]);
+                                        return view('components.fuzzy_table', ['fuzzy' => $jsonDecode, "kriteria" => "TBU"]);
                                     } else {
                                         return 'Invalid JSON';
                                     }
                                 } else if (is_array($record->fuzzy_tbu)) {
-                                    return view('components.fuzzy_table', ['fuzzy' => $record->fuzzy_tbu]);
+                                    return view('components.fuzzy_table', ['fuzzy' => $record->fuzzy_tbu, "kriteria" => "TBU"]);
                                 }
 
                                 return 'No data available';
@@ -139,12 +144,12 @@ class KalkulatorFuzzyResource extends Resource
                                 if (is_string($record->fuzzy_bbtb)) {
                                     $jsonDecode = json_decode($record->fuzzy_bbtb, true);
                                     if (is_array($jsonDecode)) {
-                                        return view('components.fuzzy_table', ['fuzzy' => $jsonDecode]);
+                                        return view('components.fuzzy_table', ['fuzzy' => $jsonDecode, "kriteria" => "BBTB"]);
                                     } else {
                                         return 'Invalid JSON';
                                     }
                                 } else if (is_array($record->fuzzy_bbtb)) {
-                                    return view('components.fuzzy_table', ['fuzzy' => $record->fuzzy_bbtb]);
+                                    return view('components.fuzzy_table', ['fuzzy' => $record->fuzzy_bbtb, "kriteria" => "BBTB"]);
                                 }
 
                                 return 'No data available';
