@@ -169,15 +169,18 @@ class FuzzyService
             $hasil = [];
 
             foreach ($variabelFuzzy as $fuzzyItem) {
+                $intervalOriginal = $fuzzyItem->interval;
                 $interval = $fuzzyItem->interval;
 
                 if ($fuzzyItem->tipe == "Trapesium") {
                     $interval = array_values(array_unique($interval));
                 }
 
-                if ($zscore <= $fuzzyItem->himpunan_fuzzy_awal) {
+                if ($fuzzyItem->tipe == "Segitiga" && $zscore == $interval[1]) {
                     $hitungFuzzy = 1;
-                } elseif ($zscore >= $fuzzyItem->himpunan_fuzzy_akhir) {
+                } elseif ($fuzzyItem->tipe == "Trapesium" && $zscore <= $interval[0] && $intervalOriginal[0] == $intervalOriginal[1]) {
+                    $hitungFuzzy = 1;
+                } elseif ($fuzzyItem->tipe == "Trapesium" && $zscore >= $interval[3] && $intervalOriginal[3] == $intervalOriginal[4]) {
                     $hitungFuzzy = 1;
                 } else {
                     if ($zscore >= $interval[0] && $zscore <= $interval[1]) {
@@ -186,17 +189,20 @@ class FuzzyService
                         $hitungFuzzy = ($interval[2] - $zscore) / ($interval[2] - $interval[1]);
                     }
                 }
-                $hasil[] = [
-                    "id" => $fuzzyItem->id,
-                    "status" => $fuzzyItem->nama,
-                    "tipe" => $fuzzyItem->tipe,
-                    "range_awal" => $fuzzyItem->range_awal,
-                    "range_akhir" => $fuzzyItem->range_akhir,
-                    "himpunan_fuzzy_awal" => $fuzzyItem->himpunan_fuzzy_awal,
-                    "himpunan_fuzzy_akhir" => $fuzzyItem->himpunan_fuzzy_akhir,
-                    "interval" => $fuzzyItem->interval,
-                    "fuzzy" => round($hitungFuzzy, 2),
-                ];
+
+                if ($hitungFuzzy != 0) {
+                    $hasil[] = [
+                        "id" => $fuzzyItem->id,
+                        "status" => $fuzzyItem->nama,
+                        "tipe" => $fuzzyItem->tipe,
+                        "range_awal" => $fuzzyItem->range_awal,
+                        "range_akhir" => $fuzzyItem->range_akhir,
+                        "himpunan_fuzzy_awal" => $fuzzyItem->himpunan_fuzzy_awal,
+                        "himpunan_fuzzy_akhir" => $fuzzyItem->himpunan_fuzzy_akhir,
+                        "interval" => $fuzzyItem->interval,
+                        "fuzzy" => round($hitungFuzzy, 2),
+                    ];
+                }
             }
 
             $hasilFinal[$key['kriteria']] = $hasil;
