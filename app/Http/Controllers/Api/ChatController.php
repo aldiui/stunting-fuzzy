@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Services\GroqService;
 use App\Traits\ApiResponder;
 use Illuminate\Http\Request;
@@ -69,8 +70,8 @@ class ChatController extends Controller
     public function index(Request $request)
     {
         try {
-            $user = auth('api')->user();
-            $chats = $user->chats()->orderBy('created_at', 'DESC')->paginate($request->get('per_page', 5));
+            $user = User::find(1);
+            $chats = $user->chats()->orderBy('created_at', 'asc')->paginate($request->get('per_page', 10));
             return $this->successResponse($chats, 'API Chat', 200);
         } catch (Exception $e) {
             return $this->errorResponse(null, 'Gagal mendapatkankan data', 500);
