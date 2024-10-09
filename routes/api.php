@@ -12,6 +12,7 @@ Route::post('register', [AuthController::class, 'register']);
 Route::get('artikel', [ArtikelController::class, 'index']);
 Route::get('artikel/{id}', [ArtikelController::class, 'show']);
 Route::get('chat', [ChatController::class, 'index']);
+Route::get('kalkulator-fuzzy/{id}', [KalkulatorFuzzyController::class, 'show']);
 
 Route::middleware(['token'])->group(function () {
     Route::get('logout', [AuthController::class, 'logout']);
@@ -19,6 +20,5 @@ Route::middleware(['token'])->group(function () {
     Route::get('user', [UserController::class, 'index']);
     Route::put('user', [UserController::class, 'update']);
     Route::get('kalkulator-fuzzy', [KalkulatorFuzzyController::class, 'index']);
-    Route::get('kalkulator-fuzzy/{id}', [KalkulatorFuzzyController::class, 'show']);
     Route::post('kalkulator-fuzzy', [KalkulatorFuzzyController::class, 'store']);
 });

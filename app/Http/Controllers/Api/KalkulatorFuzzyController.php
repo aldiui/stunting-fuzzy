@@ -131,7 +131,7 @@ class KalkulatorFuzzyController extends Controller
     public function show($id)
     {
         try {
-            $user = auth('api')->user();
+            $user = User::with('kalkulatorFuzzies')->find(1);
             $kalkulatorFuzzy = $user->kalkulatorFuzzies()->find($id);
 
             if (!$kalkulatorFuzzy) {

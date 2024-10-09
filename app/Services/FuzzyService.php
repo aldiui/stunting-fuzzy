@@ -180,7 +180,7 @@ class FuzzyService
                     $hitungFuzzy = 1;
                 } elseif ($fuzzyItem->tipe == "Trapesium" && $zscore <= $interval[0] && $intervalOriginal[0] == $intervalOriginal[1]) {
                     $hitungFuzzy = 1;
-                } elseif ($fuzzyItem->tipe == "Trapesium" && $zscore >= $interval[3] && $intervalOriginal[3] == $intervalOriginal[4]) {
+                } elseif ($fuzzyItem->tipe == "Trapesium" && $zscore >= $interval[2] && $intervalOriginal[2] == $intervalOriginal[3]) {
                     $hitungFuzzy = 1;
                 } else {
                     if ($zscore >= $interval[0] && $zscore <= $interval[1]) {
